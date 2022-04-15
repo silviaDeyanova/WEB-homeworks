@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Реферат</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h2>ECMAScript 2016/6/ ES 7+</h2>
+      </header>
+      <article>
+        <section>
+          <h3>Въведение</h3>
+          <p>
+            ECMAScript е стандартът, на който JavaScript се базира, и обикновено
+            се използва с абревиатурата ES. Относно произхода на името, Ecma
+            International е швейцарска организация, която се занимава с
+            дефиниране на международни стандарти. ECMA-262 е стандарт създаден
+            от ECMA International и съдържа спецификацията за скриптов език
+            ECMAScript. JavaScript основно имплементира ECMAScript
+            спецификацията, описана в ECMA-262, но съществуват и разлики между
+            тях.[2]
+          </p>
+          <p>
+            Освен JavaScript и други езици имплементират ECMAScript,
+            включително:
+          </p>
+          <ul>
+            <li>
+              ActionScript (Flash скриптов език), който губи популярност,
+              откакто Flash ще бъде прекратен през 2020
+            </li>
+            <li>
+              Jscript (Microsoft скриптов диалект), когато JavaScript е бил
+              поддържан само от Netscape и войните между браузърите са стигнали
+              своя пик, Microsoft е трябвало да създадат своя собствена версия
+              за Internet Explorer
+            </li>
+          </ul>
+          <p>
+            Но въпреки това JavaScript е най-известната и широко използвана
+            имплементация на ES. [1]
+          </p>
+        </section>
+        <h3>Новости във версиите ECMAScript 2016+</h3>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2016:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                <span class="function">Array.prototype.includes()</span> –
+                проверява дали масив съдържа дадена стойност. Връща true, ако
+                масивът има елемент, чиято стойност е подаденият на функцията
+                елемент <span class="parameter">searchElemen</span>t и false в
+                противен случай. Търсенето започва от индекс
+                <span class="parameter">fromIndex</span>: [3]
+              </p>
+              <pre>
+              <code>
+                .includes(searchElement: T, fromIndex=0): boolean
+              </code>
+              <code>
+                > [0, 1, 2].includes(1) 
+                true
+                > [0, 1, 2].includes(5) 
+                false
+              </code>
+            </pre>
+            </li>
+            <li>
+              <p>Експоненциалния оператор (**) – повдигане на степен: [3]</p>
+              <pre>
+              <code>
+                > 4 ** 2
+                16
+              </code>
+            </pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2017:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                <span class="function">Async</span> функциите
+                <span class="function">(async/await)</span> позволяват да се
+                използва синтаксис, който изглежда синхронен, за да се напише
+                асинхронен код [3]
+              </p>
+              <p>Да разгледаме следната async функция:</p>
+              <pre>
+              <code>
+                async function fetchJsonAsync(url) {
+                  try {
+                    const request = await fetch(url); // async
+                    const text = await request.text(); // async
+                    return JSON.parse(text); // sync
+                  }
+                  catch (error) {
+                    assert.fail(error);
+                  }
+                }
+              </code>
+            </pre>
+              <p>
+                Този код е еквивалентен на следния код, който използва Promise:
+              </p>
+              <pre>
+              <code>
+                function fetchJsonViaPromises(url) {
+                  return fetch(url) // async
+                  .then(request => request.text()) // async
+                  .then(text => JSON.parse(text)) // sync
+                  .catch(error => {
+                    assert.fail(error);
+                  });
+                }                
+              </code>
+            </pre>
+              <p>
+                Няколко наблюдения относно асинхронната функция
+                <span class="function">fetchJsonAsync()</span>: [3]
+              </p>
+              <ul>
+                <li>
+                  Асинхронните функции са означени с ключовата дума
+                  <span class="function">async</span>
+                </li>
+                <li>
+                  В тялото на асинхронната функция се пише
+                  <span class="function">Promise</span> базиран код все едно е
+                  синхронен. Само трябва да се добави
+                  <span class="function">await</span> оператора всеки път,
+                  когато стойност е <span class="function">Promise</span>. Този
+                  оператор паузира асинхронната функция и я пуска щом
+                  <span class="function">Promise</span> е установен. Ако
+                  <span class="function">Promise</span> е изпълнен,
+                  <span class="function">await</span> връща получената стойност.
+                  Ако <span class="function">Promise</span> е отказан,
+                  <span class="function">await</span> хвърля стойност на отказ.
+                </li>
+                <li>
+                  Резултатът от асинхронна функция винаги е
+                  <span class="function">Promise</span>. Всяка стойност, която е
+                  върната (имплицитно или експлицитно) се използва, за да
+                  изпълни <span class="function">Promise</span>. Всеки
+                  <span class="function">exception</span>, който е хвърлен, се
+                  използва, за да откаже <span class="function">Promise</span>.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <span class="function">Object.values()</span> връща масив със
+                стойностите на всички изброими полета с ключ символен низ на
+                даден обект [3]
+              </p>
+              <pre>
+              <code>
+                const firstName = Symbol('firstName');
+                const obj = {
+                  [firstName]: 'Jane',
+                  lastName: 'Doe',
+                };
+                assert.deepEqual(
+                  Object.values(obj),
+                  ['Doe']);
+              </code>
+            </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Object.entries()</span> връща масив с
+                ключ символен низ на даден обект; всяка двойка се представя като
+                двуелементен масив [3]
+              </p>
+              <pre>
+              <code>
+                const firstName = Symbol('firstName');
+                const obj = {
+                  [firstName]: 'Jane',
+                  lastName: 'Doe',
+                };
+                assert.deepEqual(
+                  Object.entries(obj),
+                  [
+                    ['lastName', 'Doe'],
+                  ]);
+              </code>
+            </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Padding</span> на символни низове:
+                методите <span class="function">.padStart()</span> и
+                <span class="function">.padEnd()</span> вмъкват
+                <span class="function">padding</span> текст [3]
+              </p>
+              <pre>
+                <code>
+                  > '7'.padStart(3, '0')
+                  '007'
+                  > 'yes'.padEnd(6, '!')
+                  'yes!!!'
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Запетайка, след която няма подаден параметър, при извикване на
+                методи и функции с параметри (trailing comma) [3]
+              </p>
+              <pre>
+                <code>
+                  // Деклариране
+                  function retrieveData(
+                    contentText,
+                    keyword,
+                    {unique, ignoreCase, pageSize}, // trailing comma
+                  ) {
+                    // ···
+                  }
+                </code>
+                <code>
+                  // Извикване
+                  retrieveData(
+                    '',
+                    null,
+                    {ignoreCase: true, pageSize: 10}, // trailing comma
+                  );
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Object.getOwnPropertyDescriptors()</span>
+                извлича дескриптори за всички полета на даден обект (ред A): [3]
+              </p>
+              <pre>
+                <code>
+                  const legoBrick = {
+                    kind: 'Plate 1x3',
+                    color: 'yellow',
+                    get description() {
+                      return `${this.kind} (${this.color})`;
+                    },
+                  };                  
+                </code>
+                <code>
+                  const desc = Object.getOwnPropertyDescriptor.bind(Object);
+                  assert.deepEqual(
+                    Object.getOwnPropertyDescriptors(legoBrick),
+                    {
+                      kind: {
+                        value: 'Plate 1x3',
+                        writable: true,
+                        enumerable: true,
+                        configurable: true,
+                      },
+                      color: {
+                        value: 'yellow',
+                        writable: true,
+                        enumerable: true,
+                        configurable: true,
+                      },
+                      description: {
+                        get: desc(legoBrick, 'description').get, // (A)
+                        set: undefined,
+                        enumerable: true,
+                        configurable: true,
+                      },
+                    });
+                </code>
+              </pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2018:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                Асинхронна итерация е асинхронната версия на синхронна итерация.
+                Базира се на <span class="function">Promise</span>: [3]
+              </p>
+              <ul>
+                <li>
+                  Със синхронни итеруеми можем да достъпим всичко. С асинхронни
+                  итеруеми трябва да използваме
+                  <span class="function">await</span> преди да достъпим нещо.
+                </li>
+                <li>
+                  Със синхронни итеруеми можем да ползваме
+                  <span class="function">for-of</span> цикли. С асинхронни
+                  итеруеми използваме
+                  <span class="function">for-await-of</span> цикли.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <span class="function">Spread</span> оператор за литерали на
+                обекти: с неговото използване в литерал на обект можем да
+                копираме полетата на друг обект в текущия. Случай, в който може
+                да се използва, е да се създаде копие на обект, но не в
+                дълбочина: [3]
+              </p>
+              <pre>
+                <code>
+                  > const obj = {one: 1, two: 2};
+                  > {...obj, three: 3}
+                  { one: 1, two: 2, three: 3 }
+                  const obj1 = {one: 1, two: 2};
+                  const obj2 = {three: 3};
+                  assert.deepEqual(
+                    {...obj1, ...obj2, four: 4},
+                    {one: 1, two: 2, three: 3,  four: 4}
+                  );
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Rest</span> синтаксисът (деструктиране)
+                може да се използва за вземане на всички полета на обект, които
+                не са споменати преди това [3]
+              </p>
+              <pre>
+                <code>
+                  const obj = { a: 1, b: 2, c: 3 };
+                  const { a: propValue, ...remaining } = obj;
+  
+                  assert.equal(propValue, 1);
+                  assert.deepEqual(remaining, {b:2, c:3});
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Promise.prototype.finally()</span> се
+                свързва с клаузата <span class="function">finally</span> от
+                <span class="function">try-catch-finally</span> израза – подобно
+                както <span class="function">Promise</span> методът
+                <span class="function">.then()</span> се свързва с
+                <span class="function">try</span> клаузата и
+                <span class="function">.catch()</span> се свързва с
+                <span class="function">catch</span> клаузата; тоест функцията,
+                подадена на <span class="function">.finally()</span>, се
+                изпълнява независимо от това дали Promise е изпълнен, или
+                отказан [3]
+              </p>
+              <pre>
+                <code>
+                  somePromise
+                  .then((result) => {
+                    // ···
+                  })
+                  .catch((error) => {
+                    // ···
+                  })
+                  .finally(() => {
+                    // ···
+                  });
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>Нови характеристики за регулярните изрази: [3]</p>
+              <ul>
+                <li>
+                  <p>
+                    Освен достъпването на групи по номер, вече могат да бъдат
+                    именувани и да се достъпват по име
+                  </p>
+                  <pre>
+                    <code>
+                      const matchObj = '---756---'.match(/(?&lt;digits>[0-9]+)/)
+                      assert.equal(matchObj.groups.digits, '756');
+                    </code>
+                  </pre>
+                </li>
+                <li>
+                  <p>Проверки за предшестващи символи:</p>
+                  <pre>
+                    <code>
+                      > 'Xabc def'.match(/(?&lt;=X)[a-z]+/g)
+                      [ 'abc' ] //връща това, което е предшествано от символа X
+                      > 'Xabc def'.match(/(?&lt;!X)[a-z]+/g)
+                      [ 'bc', 'def' ] //връща това, което не е предшествано от символа X
+                    </code>
+                  </pre>
+                </li>
+                <li>
+                  <p>
+                    /s (dotAll) флаг за регулярни изрази – ако този флаг е
+                    активен, точката хваща разделителите за редове (по
+                    подразбиране не го прави)
+                  </p>
+                  <pre>
+                    <code>
+                      > /./.test('\n')
+                      false
+                      > /./s.test('\n')
+                      true
+                    </code>
+                  </pre>
+                </li>
+                <li>
+                  <p>
+                    RegExp Unicode property escapes - дават много повече
+                    свобода, когато търсим съвпадения за Unicode code point:
+                  </p>
+                  <pre>
+                    <code>
+                      > /^\p{Lowercase_Letter}+$/u.test('aüπ')
+                      true
+                      > /^\p{White_Space}+$/u.test('\n \t')
+                      true
+                      > /^\p{Script=Greek}+$/u.test('ΩΔΨ')
+                      true
+                    </code>
+                  </pre>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                Template literal revision позволява текст с наклонени черти в
+                “tagged” темплейти, което не е позволено в стринг литерали
+                например: [3]
+              </p>
+              <pre>
+                <code>
+                  windowsPath`C:\uuu\xxx\111`
+                  latex`\unicode`
+
+                  assert.deepEqual(
+                    cookedRaw`\u{54}\u0065\x78t`,
+                    {
+                      cooked: ['Text'],
+                      raw:    ['\\u{54}\\u0065\\x78t'],
+                      substitutions: [],
+                    });
+                </code>
+              </pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2019:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                Методът за масиви
+                <span class="function">.flatMap()</span> работи като
+                <span class="function">.map()</span>, но позволява на callback-a
+                да върне масив от 0 или повече стойности вместо само една
+                стойност. Върнатите масиви са след това конкатенирани и се
+                превръщат в резултат на
+                <span class="function">.flatMap()</span>. Случаите, в които се
+                използва са: [3]
+              </p>
+              <ul>
+                <li>Филтриране и мапване по едно и също време</li>
+                <li>
+                  Мапване на единична входна стойност до множество изходни
+                  стойности
+                </li>
+                <pre>
+                  <code>
+                    .flatMap&lt;U>(
+                      callback: (value: T, index: number, array: T[]) => U|Array&lt;U>,
+                      thisValue?: any
+                    ): U[]                    
+                  </code>
+                  <code>
+                    > ['a', 'b', 'c'].flatMap(x => [x,x])
+                    [ 'a', 'a', 'b', 'b', 'c', 'c' ]
+                    > ['a', 'b', 'c'].flatMap(x => [x])
+                    [ 'a', 'b', 'c' ]
+                    > ['a', 'b', 'c'].flatMap(x => [])
+                    []
+                  </code>
+                </pre>
+              </ul>
+            </li>
+            <li>
+              <p>
+                Методът за масиви
+                <span class="function">.flat()</span> преобразува вложени масиви
+                в прави масиви (flat). Опционално може да се укаже на каква
+                дълбочина на вложеност да спре процесът. “Flattens” масив: влиза
+                надълбоко в масивите, които са вложени във входния масив, и
+                създава копие, като всички стойности, които намери на ниво
+                <span class="function">depth</span>
+                или по-ниско, са преместени на най-горно ниво: [3]
+              </p>
+              <pre>
+                <code>
+                  .flat(depth = 1): any[]
+                </code>
+                <code>
+                  > [ 1,2, [3,4], [[5,6]] ].flat(0) // без промяна
+                  [ 1, 2, [3,4], [[5,6]] ]
+
+                  > [ 1,2, [3,4], [[5,6]] ].flat(1)
+                  [1, 2, 3, 4, [5,6]]
+
+                  > [ 1,2, [3,4], [[5,6]] ].flat(2)
+                  [1, 2, 3, 4, 5, 6]
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Object.fromEntries()</span> създава обект
+                от итеруеми сред входните данни. Всеки входен елемент е
+                двуелементен масив с елемент ключ и елемент стойност [3]
+              </p>
+              <pre>
+                <code>
+                  const symbolKey = Symbol('symbolKey');
+                  assert.deepEqual(
+                    Object.fromEntries(
+                      [
+                        ['stringKey', 1],
+                        [symbolKey, 2],
+                      ]
+                    ),
+                    {
+                      stringKey: 1,
+                      [symbolKey]: 2,
+                    }
+                  );
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Стринг методите <span class="function">.trimStart()</span> и
+                <span class="function">.trimEnd()</span> работят както
+                <span class="function">.trim()</span>, но премахват whitespace
+                (табулация, интервал) само в началото или само накрая на
+                символен низ: [3]
+              </p>
+              <pre>
+                <code>
+                  .trimStart(): string
+                  > '  abc  '.trimStart()
+                  'abc  '
+
+                  .trimEnd(): string
+                  > '  abc  '.trimEnd()
+                  '  abc'
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Опционално използване catch binding – вече може да бъде
+                пропуснат параметъра на
+                <span class="function">catch</span> клаузата, ако не го
+                ползваме: [3]
+              </p>
+              <pre>
+                <code>
+                  try {
+                    // ···
+                  } catch {
+                    // ···
+                  }                  
+                </code>
+              </pre>
+              <p>
+                Това понякога може да бъде полезно. Например Node.js има
+                следната API функция
+                <span class="function">assert.throws(func)</span>, която
+                проверява дали е хвърлена грешка в
+                <span class="function">func</span>. Може да бъде имплементирана
+                както следва:
+              </p>
+              <pre>
+                <code>
+                  function throws(func) {
+                    try {
+                      func();
+                    } catch {
+                      return; // everything OK
+                    }
+                    throw new Error('Function didn’t throw an exception!');
+                  }
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Symbol.prototype.description</span> – е
+                getter метод за четене на описанието на символ. Първоначално
+                описанието е било включено в резултата на
+                <span class="function">.toString()</span>, но не е било възможно
+                да бъде достъпвано индивидуално [3]
+              </p>
+              <p>
+                Параметърът, който подаваме на функцията, създаваща символ,
+                осигурява описание за създадения символ:
+              </p>
+              <pre>
+                <code>
+                  const mySymbol = Symbol('mySymbol');
+                </code>
+              </pre>
+              <p>
+                Описанието може да бъде достъпвано по два начина: Първо, то е
+                част от символния низ, върнат от
+                <span class="function">.toString()</span>:
+              </p>
+              <pre>
+                <code>
+                  assert.equal(mySymbol.toString(), 'Symbol(mySymbol)');
+                </code>
+              </pre>
+              <p>
+                Второ, от ES2019 можем да извличаме описанието чрез пропъртито
+                .description:
+              </p>
+              <pre>
+                <code>
+                  assert.equal(mySymbol.description, 'mySymbol');
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">JSON.stringify</span> превръща JavaScript
+                обект или стойност в JSON символен низ, опционално замествайки
+                стойности, ако е подадена такава функция, или опционално
+                включвайки само специфични пропъртита, ако е подаден такъв масив
+                [3]
+              </p>
+              <pre>
+                <code>
+                  console.log(JSON.stringify({ x: 5, y: 6 }));
+                  // очакван изход: "{"x":5,"y":6}"
+
+                  console.log(JSON.stringify([new Number(3), new String('false'), new Boolean(false)]));
+                  // очакван изход: "[3,"false",false]"
+
+                  console.log(JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] }));
+                  // очакван изход: "{"x":[10,null,null,null]}"
+
+                  console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
+                  // очакван изход: ""2006-01-02T15:04:05.000Z""
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Function.prototype.toString()</span> –
+                метод, който връща символен низ, представляващ сорс кода на
+                функцията [3]
+              </p>
+              <pre>
+                <code>
+                  function sum(a, b) {
+                    return a + b;
+                  }
+                  
+                  console.log(sum.toString());
+                  // очакван изход: "function sum(a, b) {
+                  //                     return a + b;
+                  //                   }"
+                  
+                  console.log(Math.abs.toString());
+                  // очакван изход: "function abs() { [native code] }"                  
+                </code>
+              </pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2020:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                Динамични импорти чрез <span class="function">import()</span>:
+                обикновеният import израз е статичен: може само да го ползваме
+                на горните нива на модули и неговият модулен спецификатор е
+                фиксиран символен низ.
+                <span class="function">import()</span> променя това. Той може да
+                бъде ползван навсякъде (включително условни изрази) и можем да
+                пресметнем неговия аргумент: [3]
+              </p>
+              <pre>
+                <code>
+                  import(moduleSpecifierStr)
+                  .then((namespaceObject) => {
+                    console.log(namespaceObject.namedExport);
+                  });
+                </code>
+              </pre>
+              <p>
+                <span class="function">import()</span> е дори много по-удобен за
+                използване чрез <span class="function">await</span>:
+              </p>
+              <pre>
+                <code>
+                  const namespaceObject = await import(moduleSpecifierStr);
+                  console.log(namespaceObject.namedExport);
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">import.meta</span> съдържа метаданни за
+                текущия модул. Неговото първо най-широко поддържано пропърти е
+                <span class="function">import.meta.url</span>, който съдържа
+                символен низ с URL на файла на текущия модул. Например: [3]
+              </p>
+              <pre>
+                <code>
+                  'https://example.com/code/main.mjs'
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Namespace re-exporting: следващият израз импортва всички
+                експорти на модула <span class="function">mod</span> в namespace
+                обект <span class="function">ns</span> и експортира този обект:
+                [3]
+              </p>
+              <pre>
+                <code>
+                  export * as ns from 'mod';
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Опционално верижно свързване за достъп до пропъртита и извикване
+                на методи. Например: [3]
+              </p>
+              <pre>
+                <code>
+                  value.?prop
+                </code>
+              </pre>
+              <p>
+                Този израз се оценява на undefined, ако value е или undefined,
+                или null. В противен случай се приема стойността на
+                <span class="function">value.prop</span>. Тази функционалност е
+                особено полезна във вериги от пропъртита, когато някои от тях
+                може да липсват
+              </p>
+            </li>
+            <li>
+              <p>Nullish coalescing operator (??): [3]</p>
+              <pre>
+                <code>
+                  value ?? defaultValue
+                </code>
+              </pre>
+              <p>
+                Този израз приема стойност
+                <span class="function">defaultValue</span>, ако
+                <span class="function">value</span> е или undefined, или null и
+                е <span class="function">value</span> в противен случай. Този
+                оператор позволява да ползваме стойност по подразбиране, когато
+                нещо липсва.
+              </p>
+              <p>
+                Първоначално е бил използван логическият „или“ оператор (||) в
+                такива случаи, но той си има своите недостатъци, защото връща
+                стойността по подразбиране, когато лявата част има falsy
+                стойност (което не винаги е коректно)
+              </p>
+            </li>
+            <li>
+              Bigints: нов тип примитивни данни; поддържа цели числа, които
+              могат да бъдат произволно големи [3]
+            </li>
+            <li>
+              <p>
+                <span class="function">String.prototype.matchAll()</span>: при
+                този метод се дава грешка, ако флагът /g не е сложен, и връща
+                iterable с всички съвпадения за даден символен низ: [3]
+              </p>
+              <p>
+                В следващия пример използваме
+                <span class="function">Array.from()</span>, за да преобразуваме
+                iterables към масиви, за да ги сравняваме по-лесно:
+              </p>
+              <pre>
+                <code>
+                  > Array.from('-a-a-a'.matchAll(/-(a)/ug))
+                  [
+                    { 0:'-a', 1:'a', index: 0, input: '-a-a-a', groups: undefined },
+                    { 0:'-a', 1:'a', index: 2, input: '-a-a-a', groups: undefined },
+                    { 0:'-a', 1:'a', index: 4, input: '-a-a-a', groups: undefined },
+                  ]
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Promise.allSettled()</span> получава
+                iterable от <span class="function">Promise</span>. Връща
+                <span class="function">Promise</span>, който е изпълнен въднъж,
+                когато входните <span class="function">Promise</span> са
+                установени. Върнатата стойност е масив с един обект на входен
+                <span class="function">Promise</span> – един от двата: [3]
+              </p>
+              <ul>
+                <li>
+                  <code
+                    >{ status: 'fulfilled', value: «fulfillment value» }</code
+                  >
+                </li>
+                <li>
+                  <code>{ status: 'rejected', reason: «rejection value» }</code>
+                </li>
+              </ul>
+              <pre>
+                <code>
+                  Promise.allSettled&lt;T>(promises: Iterable&lt;Promise&lt;T>>)
+                  : Promise&lt;Array&lt;SettlementObject&lt;T>>>
+                
+                  type SettlementObject&lt;T> = FulfillmentObject&lt;T> | RejectionObject;
+                  
+                  interface FulfillmentObject&lt;T> {
+                    status: 'fulfilled';
+                    value: T;
+                  }
+                  
+                  interface RejectionObject {
+                    status: 'rejected';
+                    reason: unknown;
+                  }
+                </code>
+              </pre>
+            </li>
+            <li>
+              <span class="function">globalThis</span> осигурява начин да се
+              достъпи глобалния обект, който работи на браузъри и на server-side
+              платформи като Node.js и Deno: [3]
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            Следните характеристики са добавени в
+            <span class="version">ECMAScript 2021:</span>
+          </p>
+          <ul>
+            <li>
+              <p>
+                <span class="function">String.prototype.replaceAll()</span>
+                позволява да се заместят всички съвпадения на регулярен израз
+                или символен низ (<span class="function">.replace()</span>
+                замества само първото срещане на символен низ): [3]
+              </p>
+              <pre>
+                <code>
+                  > 'abbbaab'.replaceAll('b', 'x')
+                  'axxxaax'
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                <span class="function">Promise.any()</span> и
+                <span class="function">AggregateError: Promise.any()</span>
+                връща <span class="function">Promise</span>, който е изпълнен,
+                щом първият <span class="function">Promise</span> в iterable от
+                <span class="function">Promise</span> е изпълнен. Ако има само
+                отказани, те са поставени в
+                <span class="function">AggregateError</span>, който става
+                rejection стойността. Използваме
+                <span class="function">Promise.any()</span>, когато се
+                интересуваме само от първият изпълнен
+                <span class="function">Promise</span> сред няколко. [3]
+              </p>
+              <pre>
+                <code>
+                  Promise.any&lt;T>(promises: Iterable&lt;Promise&lt;T>>): Promise&lt;T>&lt;/T>
+                </code>
+              </pre>
+              <p>
+                Това е сигнатурата на типа на
+                <span class="function">AggregateError</span> (подклас на
+                <span class="function">Error</span>):
+              </p>
+              <pre>
+                <code>
+                  class AggregateError extends Error {
+                    errors: Array&lt;any>;
+                  
+                    constructor(
+                      errors: Iterable&lt;any>,
+                      message: string = '',
+                      options?: ErrorOptions // ES2022
+                    );
+                  }
+                  interface ErrorOptions {
+                    cause?: any; // ES2022
+                  }                  
+                </code>
+              </pre>
+              <p>
+                Фигура, която показва как
+                <span class="function">Promise.any()</span> работи:
+              </p>
+              <div id="image"><img src="img/combinator-promise-any.svg" /></div>
+            </li>
+            <li>
+              <p>Logical assignment оператори: [3]</p>
+              <pre>
+                <code>
+                  a ||= b
+                  a &&= b
+                  a ??= b
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>Долна черта (_) като разделител в: [3]</p>
+              <ul>
+                <li>Number literals: 123_456.789_012</li>
+                <li>Bigint literals: 6_000_000_000_000_000_000_000_000n</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>
+            <span class="version">ECMAScript 2022</span> ще стане стандарт през
+            юни 2022. Следните предложения са стигнали етап 4 и са предвидени да
+            станат част от този стандарт:
+          </p>
+          <ul>
+            <li>
+              <p>Нови членове на класове [3]</p>
+              <ul>
+                <li>
+                  <p>Пропъртита (публични) могат вече да се създадат чрез:</p>
+                  <p>Instance public fields:</p>
+                  <p>
+                    Инстанции на следния клас имат две instance пропъртита
+                    (създадени на ред A и ред B):
+                  </p>
+                  <pre>
+                    <code>
+                      class InstPublicClass {
+                        // Instance public field
+                        instancePublicField = 0; // (A)
+                      
+                        constructor(value) {
+                          // We don’t need to mention .property elsewhere!
+                          this.property = value; // (B)
+                        }
+                      }
+                      
+                      const inst = new InstPublicClass('constrArg');
+                      assert.deepEqual(
+                        Reflect.ownKeys(inst),
+                        ['instancePublicField', 'property']
+                      );
+                      assert.equal(
+                        inst.instancePublicField, 0
+                      );
+                      assert.equal(
+                        inst.property, 'constrArg'
+                      );                      
+                    </code>
+                  </pre>
+                  <p>
+                    Ако създадем instance property в конструктора (ред B), няма
+                    нужда да го декларираме никъде.
+                  </p>
+                  <p>Static public fields:</p>
+                  <pre>
+                    <code>
+                      const computedFieldKey = Symbol('computedFieldKey');
+                      class StaticPublicFieldClass {
+                        static identifierFieldKey = 1;
+                        static 'quoted field key' = 2;
+                        static [computedFieldKey] = 3;
+                      }
+
+                      assert.deepEqual(
+                        Reflect.ownKeys(StaticPublicFieldClass),
+                        [
+                          'length', // number of constructor parameters
+                          'name', // 'StaticPublicFieldClass'
+                          'prototype',
+                          'identifierFieldKey',
+                          'quoted field key',
+                          computedFieldKey,
+                        ],
+                      );
+
+                      assert.equal(StaticPublicFieldClass.identifierFieldKey, 1);
+                      assert.equal(StaticPublicFieldClass['quoted field key'], 2);
+                      assert.equal(StaticPublicFieldClass[computedFieldKey], 3);
+                    </code>
+                  </pre>
+                </li>
+                <li>
+                  <p>
+                    Статични инициализиращи блокове – изпълняват се, когато
+                    класът е създаден (ред A):
+                  </p>
+                  <pre>
+                    <code>
+                      class Translator {
+                        static translations = {
+                          yes: 'ja',
+                          no: 'nein',
+                          maybe: 'vielleicht',
+                        };
+                        static englishWords = [];
+                        static germanWords = [];
+                        static { // (A)
+                          for (const [english, german] of Object.entries(this.translations)) {
+                            this.englishWords.push(english);
+                            this.germanWords.push(german);
+                          }
+                        }
+                      }                      
+                    </code>
+                  </pre>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                Private slot checks: следният израз проверява дали
+                <span class="function">obj</span> има private слот
+                <span class="function">#privateSlot</span>: [3]
+              </p>
+              <pre>
+                <code>
+                  #privateSlot in obj
+                </code>
+              </pre>
+              <p>
+                <span class="function">in</span> операторът може да се използва
+                за проверка дали private слот съществува (ред A):
+              </p>
+              <pre>
+                <code>
+                  class Color {
+                    #name;
+                    constructor(name) {
+                      this.#name = name;
+                    }
+                    static check(obj) {
+                      return #name in obj; // (A)
+                    }
+                  }                  
+                </code>
+              </pre>
+              <p>
+                Private методи: следният код показва, че private методите
+                създават private слотове в инстанциите:
+              </p>
+              <pre>
+                <code>
+                  class C1 {
+                    #priv() {}
+                    static check(obj) {
+                      return #priv in obj;
+                    }
+                  }
+                  assert.equal(C1.check(new C1()), true);                  
+                </code>
+              </pre>
+            </li>
+            <li>
+              <span class="function">await</span> на горно ниво в методи: вече
+              може да бъде използван <span class="function">await</span> на
+              горни нива на модули и не е нужно да се пишат
+              <span class="function">async</span> функции повече: [3]
+            </li>
+            <li>
+              <p>
+                <span class="function">error.cause</span>:
+                <span class="function">error</span> и неговите подкласове
+                позволяват да се специфицира кой
+                <span class="function">error</span> е предизвикал текущия: [3]
+              </p>
+              <pre>
+                <code>
+                  new Error('Something went wrong', {cause: otherError})
+                </code>
+              </pre>
+            </li>
+            <li>
+              <p>
+                Методът <span class="function">.at()</span> за индексируеми
+                стойности позволяват да се чете елемент на определен индекс
+                (като оператора []) и поддържа отрицателни индекси (за разлика
+                от оператора []): [3]
+              </p>
+              <pre>
+                <code>
+                  > ['a', 'b', 'c'].at(0)
+                  'a'
+                  > ['a', 'b', 'c'].at(-1)
+                  'c'
+                </code>
+              </pre>
+              <p>
+                Следните “indexable” типове имат метода
+                <span class="function">.at()</span>:
+              </p>
+              <ul>
+                <li>string</li>
+                <li>Array</li>
+                <li>всички Typed Array класове: Uint8Array etc.</li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                RegExp match indices: ако добавим флаг на регулярен израз,
+                използването му създава match обекти, които записват началния и
+                крайния индекс на всяка съвпаднала група [3]
+              </p>
+              <p>Така се достъпват съвпаденията на номерирани групи:</p>
+              <pre>
+                <code>
+                  const matchObj = /(a+)(b+)/d.exec('aaaabb');
+                  assert.equal(
+                    matchObj[1], 'aaaa'
+                  );
+                  assert.equal(
+                    matchObj[2], 'bb'
+                  );
+                </code>
+              </pre>
+              <p>
+                Заради използването на флага <span class="function">/d</span>,
+                <span class="function">matchObj</span> също има пропърти
+                <span class="function">.indices</span>, което записва за всяка
+                група къде е било съвпадението във входния символен низ
+              </p>
+              <pre>
+                <code>
+                  assert.deepEqual(
+                    matchObj.indices[1], [0, 4]
+                  );
+                  assert.deepEqual(
+                    matchObj.indices[2], [4, 6]
+                  );
+                </code>
+              </pre>
+              <p>Достъпване на съвпаденията на именувани групи:</p>
+              <pre>
+                <code>
+                  const matchObj = /(?&lt;as>a+)(?&lt;bs>b+)/d.exec('aaaabb');
+                    assert.equal(
+                      matchObj.groups.as, 'aaaa');
+                    assert.equal(
+                      matchObj.groups.bs, 'bb');                    
+                </code>
+              </pre>
+            </li>
+            <li>
+              <span class="function">Object.hasOwn(obj, propKey)</span>
+              осигурява сигурен начин за проверка дали обект
+              <span class="function">obj</span> има свое собствено пропърти с
+              ключа <span class="function">propKey</span>. В сравнение с
+              <span class="function">Object.prototype.hasOwnProperty</span>,
+              методът работи с всички обекти:
+            </li>
+          </ul>
+        </section>
+        <h3>Източници</h3>
+        <section>
+          [1]https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e
+          [2]https://www.freecodecamp.org/news/whats-the-difference-between-javascript-and-ecmascript-cba48c73a2b5
+          [3]https://exploringjs.com/impatient-js/ch_new-javascript-features.html#new-in-es2017
+        </section>
+        <h3>Използвана литература</h3>
+        <section>https://exploringjs.com/impatient-js/</section>
+      </article>
+    </div>
+  </body>
+</html>
