@@ -3,18 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Описание на новостите в  ECMAScript 7+" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>Реферат</title>
+    <title>Новости в ECMAScript 7+</title>
   </head>
   <body>
     <div class="container">
       <header>
-        <h2>ECMAScript 2016/6/ ES 7+</h2>
+        <nav>
+          <ul class="navbar">
+            <li><a href="#introduction">Въведение</a></li>
+            <li><a href="#versions">Версии</a></li>
+          </ul>
+        </nav>
+        <h1>ECMAScript 2016/6/ ES 7+</h1>
       </header>
-      <article>
-        <section>
-          <h3>Въведение</h3>
+      <main>
+        <section id="introduction">
+          <h2>Въведение</h2>
           <p>
             ECMAScript е стандартът, на който JavaScript се базира, и обикновено
             се използва с абревиатурата ES. Относно произхода на името, Ecma
@@ -23,7 +31,7 @@
             от ECMA International и съдържа спецификацията за скриптов език
             ECMAScript. JavaScript основно имплементира ECMAScript
             спецификацията, описана в ECMA-262, но съществуват и разлики между
-            тях.[2]
+            тях. <a href="#2">[2]</a>
           </p>
           <p>
             Освен JavaScript и други езици имплементират ECMAScript,
@@ -43,11 +51,11 @@
           </ul>
           <p>
             Но въпреки това JavaScript е най-известната и широко използвана
-            имплементация на ES. [1]
+            имплементация на ES. <a href="#1">[1]</a>
           </p>
         </section>
-        <h3>Новости във версиите ECMAScript 2016+</h3>
-        <section>
+        <h2>Новости във версиите ECMAScript 2016+</h2>
+        <section id="versions">
           <p>
             Следните характеристики са добавени в
             <span class="version">ECMAScript 2016:</span>
@@ -60,22 +68,23 @@
                 масивът има елемент, чиято стойност е подаденият на функцията
                 елемент <span class="parameter">searchElemen</span>t и false в
                 противен случай. Търсенето започва от индекс
-                <span class="parameter">fromIndex</span>: [3]
+                <span class="parameter">fromIndex</span>: <a href="#3">[3]</a>
               </p>
               <pre>
               <code>
                 .includes(searchElement: T, fromIndex=0): boolean
               </code>
               <code>
-                > [0, 1, 2].includes(1) 
-                true
-                > [0, 1, 2].includes(5) 
-                false
+                [0, 1, 2].includes(1) // резултат true
+                [0, 1, 2].includes(5) // резултат false
               </code>
             </pre>
             </li>
             <li>
-              <p>Експоненциалния оператор (**) – повдигане на степен: [3]</p>
+              <p>
+                Експоненциалния оператор (**) – повдигане на степен:
+                <a href="#3">[3]</a>
+              </p>
               <pre>
               <code>
                 > 4 ** 2
@@ -96,14 +105,14 @@
                 <span class="function">Async</span> функциите
                 <span class="function">(async/await)</span> позволяват да се
                 използва синтаксис, който изглежда синхронен, за да се напише
-                асинхронен код [3]
+                асинхронен код <a href="#3">[3]</a>
               </p>
               <p>Да разгледаме следната async функция:</p>
               <pre>
               <code>
                 async function fetchJsonAsync(url) {
                   try {
-                    const request = await fetch(url); // async
+                    const request = await fetch(url); // async; fetch връща Promise
                     const text = await request.text(); // async
                     return JSON.parse(text); // sync
                   }
@@ -114,7 +123,9 @@
               </code>
             </pre>
               <p>
-                Този код е еквивалентен на следния код, който използва Promise:
+                Този код е еквивалентен на следния код, който използва Promise
+                (обект, който представлява евентуалното завършване (или грешка)
+                на асинхронна операция и неговата резултатна стойност):
               </p>
               <pre>
               <code>
@@ -130,7 +141,8 @@
             </pre>
               <p>
                 Няколко наблюдения относно асинхронната функция
-                <span class="function">fetchJsonAsync()</span>: [3]
+                <span class="function">fetchJsonAsync()</span>:
+                <a href="#3">[3]</a>
               </p>
               <ul>
                 <li>
@@ -164,18 +176,16 @@
               <p>
                 <span class="function">Object.values()</span> връща масив със
                 стойностите на всички изброими полета с ключ символен низ на
-                даден обект [3]
+                даден обект <a href="#3">[3]</a>
               </p>
               <pre>
               <code>
                 const firstName = Symbol('firstName');
                 const obj = {
-                  [firstName]: 'Jane',
-                  lastName: 'Doe',
+                    [firstName]: 'Jane',
+                    lastName: 'Doe',
                 };
-                assert.deepEqual(
-                  Object.values(obj),
-                  ['Doe']);
+                console.log(Object.values(obj)); // резултат ['Doe']
               </code>
             </pre>
             </li>
@@ -183,20 +193,17 @@
               <p>
                 <span class="function">Object.entries()</span> връща масив с
                 ключ символен низ на даден обект; всяка двойка се представя като
-                двуелементен масив [3]
+                двуелементен масив <a href="#3">[3]</a>
               </p>
               <pre>
               <code>
-                const firstName = Symbol('firstName');
-                const obj = {
-                  [firstName]: 'Jane',
-                  lastName: 'Doe',
-                };
-                assert.deepEqual(
-                  Object.entries(obj),
-                  [
-                    ['lastName', 'Doe'],
-                  ]);
+                  const firstName = Symbol('firstName');
+                  const obj = {
+                      [firstName]: 'Jane',
+                      lastName: 'Doe',
+                  };
+                  console.log(Object.entries(obj)); 
+                  // резултат  ['lastName', 'Doe']
               </code>
             </pre>
             </li>
@@ -205,7 +212,7 @@
                 <span class="function">Padding</span> на символни низове:
                 методите <span class="function">.padStart()</span> и
                 <span class="function">.padEnd()</span> вмъкват
-                <span class="function">padding</span> текст [3]
+                <span class="function">padding</span> текст <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -219,7 +226,10 @@
             <li>
               <p>
                 Запетайка, след която няма подаден параметър, при извикване на
-                методи и функции с параметри (trailing comma) [3]
+                методи и функции с параметри (trailing comma); създадена е за
+                удобство при писане на код, за да не излиза грешка при изпусната
+                запетайка
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -242,48 +252,6 @@
                 </code>
               </pre>
             </li>
-            <li>
-              <p>
-                <span class="function">Object.getOwnPropertyDescriptors()</span>
-                извлича дескриптори за всички полета на даден обект (ред A): [3]
-              </p>
-              <pre>
-                <code>
-                  const legoBrick = {
-                    kind: 'Plate 1x3',
-                    color: 'yellow',
-                    get description() {
-                      return `${this.kind} (${this.color})`;
-                    },
-                  };                  
-                </code>
-                <code>
-                  const desc = Object.getOwnPropertyDescriptor.bind(Object);
-                  assert.deepEqual(
-                    Object.getOwnPropertyDescriptors(legoBrick),
-                    {
-                      kind: {
-                        value: 'Plate 1x3',
-                        writable: true,
-                        enumerable: true,
-                        configurable: true,
-                      },
-                      color: {
-                        value: 'yellow',
-                        writable: true,
-                        enumerable: true,
-                        configurable: true,
-                      },
-                      description: {
-                        get: desc(legoBrick, 'description').get, // (A)
-                        set: undefined,
-                        enumerable: true,
-                        configurable: true,
-                      },
-                    });
-                </code>
-              </pre>
-            </li>
           </ul>
         </section>
         <section>
@@ -295,7 +263,8 @@
             <li>
               <p>
                 Асинхронна итерация е асинхронната версия на синхронна итерация.
-                Базира се на <span class="function">Promise</span>: [3]
+                Базира се на <span class="function">Promise</span>:
+                <a href="#3">[3]</a>
               </p>
               <ul>
                 <li>
@@ -310,6 +279,33 @@
                   <span class="function">for-await-of</span> цикли.
                 </li>
               </ul>
+              <pre>
+                <code>
+                  const asyncIterable = syncToAsyncIterable(['a', 'b']);
+                  const asyncIterator = asyncIterable[Symbol.asyncIterator]();
+
+                  // Извиква се .next() докато .done е със стойност true:
+                  asyncIterator.next()
+                  .then(iteratorResult => {
+                    assert.deepEqual(
+                      iteratorResult,
+                      { value: 'a', done: false });
+                    return asyncIterator.next();
+                  })
+                  .then(iteratorResult => {
+                    assert.deepEqual(
+                      iteratorResult,
+                      { value: 'b', done: false });
+                    return asyncIterator.next();
+                  })
+                  .then(iteratorResult => {
+                    assert.deepEqual(
+                      iteratorResult,
+                      { value: undefined, done: true });
+                  })
+                  ;
+                </code>
+              </pre>
             </li>
             <li>
               <p>
@@ -317,7 +313,7 @@
                 обекти: с неговото използване в литерал на обект можем да
                 копираме полетата на друг обект в текущия. Случай, в който може
                 да се използва, е да се създаде копие на обект, но не в
-                дълбочина: [3]
+                дълбочина: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -337,7 +333,7 @@
               <p>
                 <span class="function">Rest</span> синтаксисът (деструктиране)
                 може да се използва за вземане на всички полета на обект, които
-                не са споменати преди това [3]
+                не са споменати преди това <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -361,7 +357,7 @@
                 <span class="function">catch</span> клаузата; тоест функцията,
                 подадена на <span class="function">.finally()</span>, се
                 изпълнява независимо от това дали Promise е изпълнен, или
-                отказан [3]
+                отказан <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -379,7 +375,9 @@
               </pre>
             </li>
             <li>
-              <p>Нови характеристики за регулярните изрази: [3]</p>
+              <p>
+                Нови характеристики за регулярните изрази: <a href="#3">[3]</a>
+              </p>
               <ul>
                 <li>
                   <p>
@@ -441,7 +439,7 @@
               <p>
                 Template literal revision позволява текст с наклонени черти в
                 “tagged” темплейти, което не е позволено в стринг литерали
-                например: [3]
+                например: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -475,7 +473,7 @@
                 стойност. Върнатите масиви са след това конкатенирани и се
                 превръщат в резултат на
                 <span class="function">.flatMap()</span>. Случаите, в които се
-                използва са: [3]
+                използва са: <a href="#3">[3]</a>
               </p>
               <ul>
                 <li>Филтриране и мапване по едно и също време</li>
@@ -510,7 +508,8 @@
                 надълбоко в масивите, които са вложени във входния масив, и
                 създава копие, като всички стойности, които намери на ниво
                 <span class="function">depth</span>
-                или по-ниско, са преместени на най-горно ниво: [3]
+                или по-ниско, са преместени на най-горно ниво:
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -532,7 +531,8 @@
               <p>
                 <span class="function">Object.fromEntries()</span> създава обект
                 от итеруеми сред входните данни. Всеки входен елемент е
-                двуелементен масив с елемент ключ и елемент стойност [3]
+                двуелементен масив с елемент ключ и елемент стойност
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -558,7 +558,7 @@
                 <span class="function">.trimEnd()</span> работят както
                 <span class="function">.trim()</span>, но премахват whitespace
                 (табулация, интервал) само в началото или само накрая на
-                символен низ: [3]
+                символен низ: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -577,7 +577,7 @@
                 Опционално използване catch binding – вече може да бъде
                 пропуснат параметъра на
                 <span class="function">catch</span> клаузата, ако не го
-                ползваме: [3]
+                ползваме: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -615,7 +615,7 @@
                 getter метод за четене на описанието на символ. Първоначално
                 описанието е било включено в резултата на
                 <span class="function">.toString()</span>, но не е било възможно
-                да бъде достъпвано индивидуално [3]
+                да бъде достъпвано индивидуално <a href="#3">[3]</a>
               </p>
               <p>
                 Параметърът, който подаваме на функцията, създаваща символ,
@@ -652,7 +652,7 @@
                 обект или стойност в JSON символен низ, опционално замествайки
                 стойности, ако е подадена такава функция, или опционално
                 включвайки само специфични пропъртита, ако е подаден такъв масив
-                [3]
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -674,7 +674,7 @@
               <p>
                 <span class="function">Function.prototype.toString()</span> –
                 метод, който връща символен низ, представляващ сорс кода на
-                функцията [3]
+                функцията <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -708,7 +708,7 @@
                 фиксиран символен низ.
                 <span class="function">import()</span> променя това. Той може да
                 бъде ползван навсякъде (включително условни изрази) и можем да
-                пресметнем неговия аргумент: [3]
+                пресметнем неговия аргумент: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -734,7 +734,8 @@
                 <span class="function">import.meta</span> съдържа метаданни за
                 текущия модул. Неговото първо най-широко поддържано пропърти е
                 <span class="function">import.meta.url</span>, който съдържа
-                символен низ с URL на файла на текущия модул. Например: [3]
+                символен низ с URL на файла на текущия модул. Например:
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -747,7 +748,7 @@
                 Namespace re-exporting: следващият израз импортва всички
                 експорти на модула <span class="function">mod</span> в namespace
                 обект <span class="function">ns</span> и експортира този обект:
-                [3]
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -758,7 +759,7 @@
             <li>
               <p>
                 Опционално верижно свързване за достъп до пропъртита и извикване
-                на методи. Например: [3]
+                на методи. Например: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -774,7 +775,7 @@
               </p>
             </li>
             <li>
-              <p>Nullish coalescing operator (??): [3]</p>
+              <p>Nullish coalescing operator (??): <a href="#3">[3]</a></p>
               <pre>
                 <code>
                   value ?? defaultValue
@@ -797,13 +798,14 @@
             </li>
             <li>
               Bigints: нов тип примитивни данни; поддържа цели числа, които
-              могат да бъдат произволно големи [3]
+              могат да бъдат произволно големи <a href="#3">[3]</a>
             </li>
             <li>
               <p>
                 <span class="function">String.prototype.matchAll()</span>: при
                 този метод се дава грешка, ако флагът /g не е сложен, и връща
-                iterable с всички съвпадения за даден символен низ: [3]
+                iterable с всички съвпадения за даден символен низ:
+                <a href="#3">[3]</a>
               </p>
               <p>
                 В следващия пример използваме
@@ -828,7 +830,8 @@
                 <span class="function">Promise</span>, който е изпълнен въднъж,
                 когато входните <span class="function">Promise</span> са
                 установени. Върнатата стойност е масив с един обект на входен
-                <span class="function">Promise</span> – един от двата: [3]
+                <span class="function">Promise</span> – един от двата:
+                <a href="#3">[3]</a>
               </p>
               <ul>
                 <li>
@@ -862,7 +865,7 @@
             <li>
               <span class="function">globalThis</span> осигурява начин да се
               достъпи глобалния обект, който работи на браузъри и на server-side
-              платформи като Node.js и Deno: [3]
+              платформи като Node.js и Deno: <a href="#3">[3]</a>
             </li>
           </ul>
         </section>
@@ -877,7 +880,8 @@
                 <span class="function">String.prototype.replaceAll()</span>
                 позволява да се заместят всички съвпадения на регулярен израз
                 или символен низ (<span class="function">.replace()</span>
-                замества само първото срещане на символен низ): [3]
+                замества само първото срещане на символен низ):
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -898,7 +902,8 @@
                 rejection стойността. Използваме
                 <span class="function">Promise.any()</span>, когато се
                 интересуваме само от първият изпълнен
-                <span class="function">Promise</span> сред няколко. [3]
+                <span class="function">Promise</span> сред няколко.
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -930,10 +935,15 @@
                 Фигура, която показва как
                 <span class="function">Promise.any()</span> работи:
               </p>
-              <div id="image"><img src="img/combinator-promise-any.svg" /></div>
+              <div id="image">
+                <img src="img/combinator-promise-any.svg" />
+              </div>
+              <p class="img-description">
+                Фигура 1. Начин на работа на Promise.any()
+              </p>
             </li>
             <li>
-              <p>Logical assignment оператори: [3]</p>
+              <p>Logical assignment оператори: <a href="#3">[3]</a></p>
               <pre>
                 <code>
                   a ||= b
@@ -943,7 +953,7 @@
               </pre>
             </li>
             <li>
-              <p>Долна черта (_) като разделител в: [3]</p>
+              <p>Долна черта (_) като разделител в: <a href="#3">[3]</a></p>
               <ul>
                 <li>Number literals: 123_456.789_012</li>
                 <li>Bigint literals: 6_000_000_000_000_000_000_000_000n</li>
@@ -959,7 +969,7 @@
           </p>
           <ul>
             <li>
-              <p>Нови членове на класове [3]</p>
+              <p>Нови членове на класове <a href="#3">[3]</a></p>
               <ul>
                 <li>
                   <p>Пропъртита (публични) могат вече да се създадат чрез:</p>
@@ -1056,7 +1066,7 @@
               <p>
                 Private slot checks: следният израз проверява дали
                 <span class="function">obj</span> има private слот
-                <span class="function">#privateSlot</span>: [3]
+                <span class="function">#privateSlot</span>: <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -1097,17 +1107,30 @@
               </pre>
             </li>
             <li>
-              <span class="function">await</span> на горно ниво в методи: вече
-              може да бъде използван <span class="function">await</span> на
-              горни нива на модули и не е нужно да се пишат
-              <span class="function">async</span> функции повече: [3]
+              <p>
+                <span class="function">await</span> на горно ниво в методи: вече
+                може да бъде използван <span class="function">await</span> на
+                горни нива на модули и не е нужно да се пишат
+                <span class="function">async</span> функции повече:
+                <a href="#3">[3]</a>
+              </p>
+              <pre>
+                <code>
+                  const params = new URLSearchParams(location.search);
+                  const language = params.get('lang');
+                  const messages = await import(`./messages-${language}.mjs`); // (A)
+
+                  console.log(messages.welcome);
+                </code>
+              </pre>
             </li>
             <li>
               <p>
                 <span class="function">error.cause</span>:
                 <span class="function">error</span> и неговите подкласове
                 позволяват да се специфицира кой
-                <span class="function">error</span> е предизвикал текущия: [3]
+                <span class="function">error</span> е предизвикал текущия:
+                <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -1120,7 +1143,7 @@
                 Методът <span class="function">.at()</span> за индексируеми
                 стойности позволяват да се чете елемент на определен индекс
                 (като оператора []) и поддържа отрицателни индекси (за разлика
-                от оператора []): [3]
+                от оператора []): <a href="#3">[3]</a>
               </p>
               <pre>
                 <code>
@@ -1144,7 +1167,7 @@
               <p>
                 RegExp match indices: ако добавим флаг на регулярен израз,
                 използването му създава match обекти, които записват началния и
-                крайния индекс на всяка съвпаднала група [3]
+                крайния индекс на всяка съвпаднала група <a href="#3">[3]</a>
               </p>
               <p>Така се достъпват съвпаденията на номерирани групи:</p>
               <pre>
@@ -1195,15 +1218,49 @@
             </li>
           </ul>
         </section>
-        <h3>Източници</h3>
-        <section>
-          [1]https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e
-          [2]https://www.freecodecamp.org/news/whats-the-difference-between-javascript-and-ecmascript-cba48c73a2b5
-          [3]https://exploringjs.com/impatient-js/ch_new-javascript-features.html#new-in-es2017
-        </section>
-        <h3>Използвана литература</h3>
-        <section>https://exploringjs.com/impatient-js/</section>
-      </article>
+      </main>
+      <footer>
+        <h2 class="footer__headers">Източници</h2>
+        <ul>
+          <li id="1">
+            [1]ES5 to ESNext — here’s every feature added to JavaScript since
+            2015, [<a
+              title="Последно посетен на 15.04.2022"
+              href="https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e"
+              target="_blank"
+            >
+              https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e </a
+            >]
+          </li>
+          <li id="2">
+            [2]What’s the difference between JavaScript and ECMAScript?, [<a
+              title="Последно посетен на 15.04.2022"
+              href="https://www.freecodecamp.org/news/whats-the-difference-between-javascript-and-ecmascript-cba48c73a2b5"
+              target="_blank"
+            >
+              https://www.freecodecamp.org/news/whats-the-difference-between-javascript-and-ecmascript-cba48c73a2b5 </a
+            >]
+          </li>
+          <li id="3">
+            [3]New JavaScript features, [<a
+              title="Последно посетен на 15.04.2022"
+              href="https://exploringjs.com/impatient-js/ch_new-javascript-features.html"
+              target="_blank"
+            >
+              https://exploringjs.com/impatient-js/ch_new-javascript-features.html </a
+            >]
+          </li>
+        </ul>
+
+        <h3 class="footer__headers">Използвана литература</h3>
+        <p>
+          JavaScript for impatient programmers (ES2022 edition) [<a
+            href="https://exploringjs.com/impatient-js/"
+            target="_blank"
+            >https://exploringjs.com/impatient-js/</a
+          >]
+        </p>
+      </footer>
     </div>
   </body>
 </html>
