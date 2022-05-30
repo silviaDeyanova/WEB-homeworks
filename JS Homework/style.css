@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+}
+
+#success, #fail {
+  position: relative;
+  top: 12%;
+  margin:0 auto;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  border: 1px solid black;
+  width: 30%;
+  display: none;
+  padding: 1rem;
+}
+
+.block {
+  display: block !important;
+}
+
+#success{
+  background-color: #4CAF50;
+  color: white;
+}
+
+#fail{
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+.err {
+  display: none;
+}
+
+form {
+  border: 1px solid #427d23;
+  width: 30%;
+  margin: auto;
+  position: relative;
+  top: 15%;
+  padding: 30px;
+}
+
+input {
+  margin: 3px;
+  width: 100%;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+  margin: 3px;
+  display: block;
+}
+
+#register-btn {
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  padding: 5px;
+  margin-top: 1rem;
+}

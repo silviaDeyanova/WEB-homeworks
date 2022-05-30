@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script async defer src="index.js"></script>
+  </head>
+  <body>
+    <div id="success"></div>
+    <div id="fail"></div>
+    <form>
+      <div>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Потребителско име"
+        />
+        <div class="err"></div>
+      </div>
+      <div>
+        <input type="text" id="name" placeholder="Име" />
+        <div class="err"></div>
+      </div>
+      <div>
+        <input type="text" id="family-name" placeholder="Фамилия" />
+        <div class="err"></div>
+      </div>
+      <div>
+        <input type="email" id="email" placeholder="Имейл" />
+        <div class="err"></div>
+      </div>
+      <div>
+        <input type="password" id="password" placeholder="Парола" />
+        <div class="err"></div>
+      </div>
+      <input type="text" id="street" placeholder="Улица" />
+      <input type="text" id="city" placeholder="Град" />
+      <div>
+        <input type="text" id="postal-code" placeholder="Пощенски код" />
+        <div class="err"></div>
+      </div>
+      <button id="register-btn">Регистрация</button>
+    </form>
+  </body>
+</html>
